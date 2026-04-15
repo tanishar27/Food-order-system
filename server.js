@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql2');
+const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const path = require('path');
 
@@ -13,27 +13,32 @@ app.use(express.json());
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, 'food order system')));
 
-// ✅ FIXED DATABASE CONNECTION (Railway)
-const db = mysql.createConnection({
-  host: 'nozomi.proxy.rlwy.net',
-  user: 'root',
-  password: 'cTVUGmTdREWZNkJrOmrdtgifHLSuIFbE',
-  database: 'railway',
-  port: 15017,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-// Connect DB
-db.connect((err) => {
+// ✅ DATABASE CONNECTION (SQLite drop-in replacement)
+const db = new sqlite3.Database(path.join(__dirname, 'database.sqlite'), (err) => {
   if (err) {
-    console.error('❌ Error connecting to MySQL:', err.message);
+    console.error('❌ Error connecting to SQLite:', err.message);
   } else {
-    console.log('✅ Connected to Railway MySQL');
+    console.log('✅ Connected to Local SQLite Database');
+    
+    // Initialize tables
+    db.serialize(() => {
+      db.run(`CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL
+      )`);
+
+      db.run(`CREATE TABLE IF NOT EXISTS orders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        food_name TEXT,
+        quantity INTEGER,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+      )`);
+    });
   }
 });
-
 
 // ================= APIs =================
 
@@ -42,9 +47,9 @@ app.post('/api/register', (req, res) => {
   const { name, email, password } = req.body;
 
   const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-  db.query(query, [name, email, password], (err, result) => {
+  db.run(query, [name, email, password], function(err) {
     if (err) {
-      if (err.code === 'ER_DUP_ENTRY') {
+      if (err.message.includes('UNIQUE constraint failed')) {
         return res.status(400).json({ error: 'Email already exists' });
       }
       return res.status(500).json({ error: err.message });
@@ -58,11 +63,11 @@ app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
 
   const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-  db.query(query, [email, password], (err, results) => {
+  db.get(query, [email, password], (err, row) => {
     if (err) return res.status(500).json({ error: err.message });
 
-    if (results.length > 0) {
-      res.json({ message: 'Login successful', user: results[0] });
+    if (row) {
+      res.json({ message: 'Login successful', user: row });
     } else {
       res.status(401).json({ error: 'Invalid email or password' });
     }
@@ -77,12 +82,14 @@ app.post('/api/orders', (req, res) => {
     return res.status(400).json({ error: 'Invalid order data' });
   }
 
-  const values = cart.map(item => [userId, item.name, item.quantity]);
-  const query = 'INSERT INTO orders (user_id, food_name, quantity) VALUES ?';
+  const stmt = db.prepare('INSERT INTO orders (user_id, food_name, quantity) VALUES (?, ?, ?)');
+  
+  cart.forEach(item => {
+    stmt.run([userId, item.name, item.quantity]);
+  });
 
-  db.query(query, [values], (err, result) => {
+  stmt.finalize((err) => {
     if (err) return res.status(500).json({ error: err.message });
-
     res.json({ message: 'Order placed successfully' });
   });
 });
