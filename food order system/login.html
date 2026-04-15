@@ -30,25 +30,56 @@
 
   <main class="container">
     <div class="modal-wrapper">
-      <div class="glass-panel modal-card">
-        <h2>Welcome Back</h2>
+      <div class="glass-panel modal-card" id="auth-card">
+        <!-- Login Form -->
+        <div id="login-section">
+          <h2>Welcome Back</h2>
+          <p>Ready to satisfy your cravings?</p>
 
-        <form autocomplete="off" onsubmit="handleLogin(event)">
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" class="input-glass"  required>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" class="input-glass" placeholder="••••••••" required>
-          </div>
-          
-          <button type="submit" class="btn">Sign In</button>
-        </form>
+          <form autocomplete="off" onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" class="input-glass" placeholder="email@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" class="input-glass" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn">Sign In</button>
+          </form>
 
-        <p style="margin-top: 20px; font-size: 14px;">
-          Don't have an account? <a href="#" style="color: var(--primary); text-decoration: none;">Sign up here</a>
-        </p>
+          <p style="margin-top: 25px; font-size: 14px; color: var(--text-muted);">
+            Don't have an account? <a href="#" onclick="toggleAuth('signup')" style="color: var(--primary); text-decoration: none; font-weight: 600;">Sign up here</a>
+          </p>
+        </div>
+
+        <!-- Registration Form (Hidden by default) -->
+        <div id="signup-section" style="display: none;">
+          <h2>Create Account</h2>
+          <p>Join the Diet Tomorrow family</p>
+
+          <form autocomplete="off" onsubmit="handleRegister(event)">
+            <div class="form-group">
+              <label for="reg-name">Full Name</label>
+              <input type="text" id="reg-name" class="input-glass" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-email">Email Address</label>
+              <input type="email" id="reg-email" class="input-glass" placeholder="email@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-password">Password</label>
+              <input type="password" id="reg-password" class="input-glass" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn">Create Account</button>
+          </form>
+
+          <p style="margin-top: 25px; font-size: 14px; color: var(--text-muted);">
+            Already have an account? <a href="#" onclick="toggleAuth('login')" style="color: var(--primary); text-decoration: none; font-weight: 600;">Login here</a>
+          </p>
+        </div>
       </div>
     </div>
   </main>

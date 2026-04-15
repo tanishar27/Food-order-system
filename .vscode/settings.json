@@ -10,10 +10,10 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
+            "name": "foodordersystem",
             "database": "foodordersystem",
-            "username": "root",
-            "connectionTimeout": 100,
-            "name": "foodordersystem"
+            "username": "password",
+            "connectionTimeout": 50
         }
     ]
 }

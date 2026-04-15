@@ -99,6 +99,7 @@ body::after {
 }
 
 .logo {
+  flex: 1;
   font-size: 32px;
   font-weight: 900;
   color: var(--text-main);
@@ -119,6 +120,7 @@ body::after {
   display: flex;
   gap: 40px;
   align-items: center;
+  justify-content: center;
   background: var(--bg-surface);
   padding: 10px 30px;
   border-radius: 100px;
@@ -142,9 +144,11 @@ body::after {
 }
 
 .nav-icons {
+  flex: 1;
   display: flex;
   gap: 20px;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .nav-icon {
@@ -618,8 +622,13 @@ body::after {
 
 /* Toast Overhaul */
 .toast-container {
-  bottom: 40px; right: 40px;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
+  z-index: 9999;
 }
 .toast {
   background: var(--bg-surface);

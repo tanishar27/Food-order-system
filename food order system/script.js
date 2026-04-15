@@ -84,23 +84,32 @@ function updateCartBadge() {
 }
 
 // Auth Handlers
+function toggleAuth(mode) {
+  const loginSection = document.getElementById('login-section');
+  const signupSection = document.getElementById('signup-section');
+  
+  if (mode === 'signup') {
+    loginSection.style.display = 'none';
+    signupSection.style.display = 'block';
+  } else {
+    loginSection.style.display = 'block';
+    signupSection.style.display = 'none';
+  }
+}
+
 async function handleLogin(event) {
   event.preventDefault();
   
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
   
-  if (!emailInput || !passwordInput) {
-    localStorage.setItem('isFoodAppLoggedIn', 'true');
-    window.location.href = 'index.html';
-    return;
-  }
+  if (!emailInput || !passwordInput) return;
   
   const email = emailInput.value;
   const password = passwordInput.value;
 
   try {
-    const response = await fetch('http://localhost:3001/api/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -111,7 +120,7 @@ async function handleLogin(event) {
     if (response.ok) {
       localStorage.setItem('isFoodAppLoggedIn', 'true');
       localStorage.setItem('foodAppUser', JSON.stringify(data.user));
-      showToast('Login successful!');
+      showToast('Welcome back, ' + data.user.name + '!');
       setTimeout(() => {
         window.location.href = 'index.html';
       }, 1000);
@@ -124,8 +133,48 @@ async function handleLogin(event) {
   }
 }
 
-function handleLogout() {
+async function handleRegister(event) {
+  event.preventDefault();
+  
+  const nameInput = document.getElementById('reg-name');
+  const emailInput = document.getElementById('reg-email');
+  const passwordInput = document.getElementById('reg-password');
+  
+  if (!nameInput || !emailInput || !passwordInput) return;
+  
+  const name = nameInput.value;
+  const email = emailInput.value;
+  const password = passwordInput.value;
+
+  try {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      showToast('Registration successful! please login.');
+      setTimeout(() => {
+        toggleAuth('login');
+        // Pre-fill email for convenience
+        document.getElementById('email').value = email;
+      }, 1500);
+    } else {
+      showToast(data.error || 'Registration failed');
+    }
+  } catch (error) {
+    showToast('Server connection failed');
+    console.error(error);
+  }
+}
+
+function handleLogout(event) {
+  if (event) event.preventDefault();
   localStorage.removeItem('isFoodAppLoggedIn');
+  localStorage.removeItem('foodAppUser');
   window.location.href = 'login.html';
 }
 
