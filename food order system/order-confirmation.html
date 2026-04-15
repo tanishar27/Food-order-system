@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation | Diet Tomorrow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="logo">Diet Tomorrow<span>.</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="#" onclick="handleLogout(event)">Logout</a>
+    </div>
+    <div class="nav-icons">
+      <a href="cart.html" class="nav-icon" aria-label="Cart">
+        🛒<span class="cart-badge" style="display:none;">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="modal-wrapper">
+      <div class="glass-panel modal-card" style="padding: 50px 30px;">
+        <div class="success-checkmark">✓</div>
+        <h2>Order Confirmed!</h2>
+        <p>Your delicious order is confirmed and being prepared with care.
+Expected delivery: 25–35 minutes.</p>
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 30px; text-align: left;">
+          <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 5px;">Order ID</div>
+          <div style="font-weight: 600; font-size: 18px; color: var(--primary); letter-spacing: 1px;">#Diet Tomorrow-9402X</div>
+        </div>
+
+        <a href="index.html" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+
+
+  <script src="script.js"></script>
+  <script>
+    // Clear cart upon arriving at success
+    window.onload = function() {
+      if(typeof clearCart === 'function') {
+        clearCart();
+      }
+      const loader = document.getElementById('loader');
+      if (loader) {
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 500);
+        }, 500);
+      }
+    }
+  </script>
+</body>
+</html>
