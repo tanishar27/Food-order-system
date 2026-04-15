@@ -8,13 +8,23 @@
 </head>
 <body>
 
+  <!-- Loading Overlay -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
   <!-- Navbar -->
-  <nav class="navbar">
+  <nav class="navbar" id="navbar">
     <a href="index.html" class="logo">Diet Tomorrow<span>.</span></a>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="menu.html">Menu</a>
       <a href="login.html" class="active">Login / Sign Up</a>
+    </div>
+    <div class="nav-icons">
+      <a href="cart.html" class="nav-icon" aria-label="Cart">
+        🛒<span class="cart-badge">0</span>
+      </a>
     </div>
   </nav>
 
@@ -23,69 +33,26 @@
       <div class="glass-panel modal-card">
         <h2>Welcome Back</h2>
 
-        <!-- ✅ LOGIN FORM -->
-        <form id="loginForm">
+        <form autocomplete="off" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="input-glass"  required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="input-glass" placeholder="••••••••" required>
+          </div>
           
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" id="email" required>
-          </div>
-
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="password" required>
-          </div>
-
           <button type="submit" class="btn">Sign In</button>
         </form>
 
-        <p style="margin-top: 20px;">
-          Don't have an account? 
-          <a href="#">Sign up here</a>
+        <p style="margin-top: 20px; font-size: 14px;">
+          Don't have an account? <a href="#" style="color: var(--primary); text-decoration: none;">Sign up here</a>
         </p>
-
       </div>
     </div>
   </main>
 
-  <!-- ✅ LOGIN SCRIPT -->
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      try {
-        const response = await fetch("https://food-order-system-ddgp.onrender.com/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert("✅ Login successful");
-
-          // Save user (optional)
-          localStorage.setItem("user", JSON.stringify(data.user));
-
-          // Redirect
-          window.location.href = "index.html";
-
-        } else {
-          alert("❌ " + data.error);
-        }
-
-      } catch (error) {
-        console.error(error);
-        alert("Server error");
-      }
-    });
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
