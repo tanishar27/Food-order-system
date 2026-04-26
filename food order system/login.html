@@ -3,87 +3,224 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Diet Tomorrow</title>
+  <title>Login - Diet Tomorrow</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #0f0f13;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.6;
+      animation: float 10s infinite ease-in-out alternate;
+    }
+    .blob1 {
+      top: -10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,107,107,0.8) 0%, rgba(0,0,0,0) 70%);
+      animation-delay: 0s;
+    }
+    .blob2 {
+      bottom: -10%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(253,160,133,0.8) 0%, rgba(0,0,0,0) 70%);
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 50px) scale(1.1); }
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem;
+      perspective: 1000px;
+    }
+
+    .auth-card {
+      background: rgba(30, 30, 35, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px 30px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .auth-header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ff6b6b, #fda085);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .auth-header p {
+      color: #a0a0a0;
+      font-size: 14px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #ff6b6b;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 107, 107, 0.2);
+    }
+
+    .input-group input::placeholder {
+      color: #666;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #ff6b6b, #fda085);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 10px;
+    }
+
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #a0a0a0;
+      font-size: 14px;
+    }
+
+    .auth-footer a {
+      color: #fda085;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .auth-footer a:hover {
+      color: #ff6b6b;
+    }
+
+    /* Section Toggling */
+    #signup-section {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Loading Overlay -->
-  <div id="loader">
-    <div class="spinner"></div>
+  <div class="bg-animation">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
   </div>
 
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <a href="index.html" class="logo">Diet Tomorrow<span>.</span></a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="login.html" class="active">Login / Sign Up</a>
-    </div>
-    <div class="nav-icons">
-      <a href="cart.html" class="nav-icon" aria-label="Cart">
-        🛒<span class="cart-badge">0</span>
-      </a>
-    </div>
-  </nav>
-
-  <main class="container">
-    <div class="modal-wrapper">
-      <div class="glass-panel modal-card" id="auth-card">
-        <!-- Login Form -->
-        <div id="login-section">
-          <h2>Welcome Back</h2>
-          <p>Ready to satisfy your cravings?</p>
-
-          <form autocomplete="off" onsubmit="handleLogin(event)">
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" class="input-glass" placeholder="email@example.com" required>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" class="input-glass" placeholder="••••••••" required>
-            </div>
-            
-            <button type="submit" class="btn">Sign In</button>
-          </form>
-
-          <p style="margin-top: 25px; font-size: 14px; color: var(--text-muted);">
-            Don't have an account? <a href="#" onclick="toggleAuth('signup')" style="color: var(--primary); text-decoration: none; font-weight: 600;">Sign up here</a>
-          </p>
+  <div class="auth-container">
+    <div class="auth-card" id="login-section">
+      <div class="auth-header">
+        <h1>Welcome Back</h1>
+        <p>Login to your Diet Tomorrow account</p>
+      </div>
+      <form onsubmit="handleLogin(event)">
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Email Address" required>
         </div>
-
-        <!-- Registration Form (Hidden by default) -->
-        <div id="signup-section" style="display: none;">
-          <h2>Create Account</h2>
-          <p>Join the Diet Tomorrow family</p>
-
-          <form autocomplete="off" onsubmit="handleRegister(event)">
-            <div class="form-group">
-              <label for="reg-name">Full Name</label>
-              <input type="text" id="reg-name" class="input-glass" placeholder="John Doe" required>
-            </div>
-            <div class="form-group">
-              <label for="reg-email">Email Address</label>
-              <input type="email" id="reg-email" class="input-glass" placeholder="email@example.com" required>
-            </div>
-            <div class="form-group">
-              <label for="reg-password">Password</label>
-              <input type="password" id="reg-password" class="input-glass" placeholder="••••••••" required>
-            </div>
-            
-            <button type="submit" class="btn">Create Account</button>
-          </form>
-
-          <p style="margin-top: 25px; font-size: 14px; color: var(--text-muted);">
-            Already have an account? <a href="#" onclick="toggleAuth('login')" style="color: var(--primary); text-decoration: none; font-weight: 600;">Login here</a>
-          </p>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Password" required>
         </div>
+        <button type="submit" class="auth-btn">Log In</button>
+      </form>
+      <div class="auth-footer">
+        Don't have an account? <a href="#" onclick="toggleAuth('signup')">Sign Up</a>
       </div>
     </div>
-  </main>
 
+    <div class="auth-card" id="signup-section">
+      <div class="auth-header">
+        <h1>Create Account</h1>
+        <p>Join Diet Tomorrow today</p>
+      </div>
+      <form onsubmit="handleRegister(event)">
+        <div class="input-group">
+          <input type="text" id="reg-name" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
+          <input type="email" id="reg-email" placeholder="Email Address" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="reg-password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="auth-btn">Sign Up</button>
+      </form>
+      <div class="auth-footer">
+        Already have an account? <a href="#" onclick="toggleAuth('login')">Log In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Toast Container Logic is in script.js -->
   <script src="script.js"></script>
 </body>
 </html>

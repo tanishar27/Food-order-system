@@ -4,23 +4,17 @@
   --bg-deep: #030305;
   --bg-surface: rgba(18, 18, 22, 0.5);
   --bg-surface-hover: rgba(28, 28, 34, 0.65);
-  
   --gradient-main: linear-gradient(135deg, #ff004f, #ff6a00);
   --gradient-glow: rgba(255, 0, 79, 0.4);
-  
   --text-main: #ffffff;
   --text-muted: #8b8b99;
-  
   --border-light: rgba(255, 255, 255, 0.04);
   --border-gloss: inset 0 1px 1px rgba(255, 255, 255, 0.15);
-  
   --glass-blur: blur(40px) saturate(180%);
-  
   --radius-xl: 32px;
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 8px;
-  
   --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -41,31 +35,19 @@ body {
   flex-direction: column;
 }
 
-/* Ambient Background Lights */
 body::before {
   content: '';
   position: absolute;
-  top: -10%; right: -5%;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(255,106,0,0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-  filter: blur(80px);
-}
-body::after {
-  content: '';
-  position: absolute;
-  top: 40%; left: -10%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
   width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(255,0,79,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,0,79,0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
   filter: blur(100px);
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -80,7 +62,6 @@ body::after {
   background: rgba(255,0,79,0.5);
 }
 
-/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
@@ -188,13 +169,11 @@ body::after {
   animation: float-badge 3s ease-in-out infinite;
 }
 
-/* Base Layout Container */
 .container {
   padding: 120px 5% 50px;
   flex: 1;
 }
 
-/* Buttons & Inputs */
 .btn {
   background: var(--gradient-main);
   color: white;
@@ -221,8 +200,8 @@ body::after {
   transition: var(--transition);
 }
 .btn:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 15px 35px var(--gradient-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 0, 79, 0.3);
 }
 .btn:hover::before { opacity: 1; }
 
@@ -258,17 +237,15 @@ body::after {
   box-shadow: 0 0 0 4px rgba(255, 0, 79, 0.15), var(--border-gloss);
 }
 
-/* Glass Panels */
 .glass-panel {
-  background: var(--bg-surface);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-xl);
-  padding: 40px;
-  box-shadow: var(--border-gloss), 0 20px 50px rgba(0,0,0,0.5);
+  background: rgba(18, 18, 22, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
-/* Hero Section */
 .hero {
   display: flex;
   align-items: center;
@@ -314,7 +291,6 @@ body::after {
   display: block;
 }
 
-/* Filter Chips (Pills) */
 .filters {
   display: flex;
   gap: 15px;
@@ -346,7 +322,6 @@ body::after {
   box-shadow: 0 10px 20px var(--gradient-glow);
 }
 
-/* Food Grid & Cards */
 .food-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -456,7 +431,6 @@ body::after {
   box-shadow: 0 10px 20px var(--gradient-glow);
 }
 
-/* Modals */
 .modal-wrapper {
   display: flex;
   justify-content: center;
@@ -465,9 +439,9 @@ body::after {
 }
 .modal-card {
   width: 100%;
-  max-width: 480px;
+  max-width: 420px;
   text-align: center;
-  padding: 50px 40px;
+  padding: 40px 35px;
 }
 .modal-card h2 {
   font-size: 36px;
@@ -498,7 +472,6 @@ body::after {
   margin-top: 10px;
 }
 
-/* Cart Page */
 .cart-layout {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -587,7 +560,6 @@ body::after {
   margin-top: 10px;
 }
 
-/* Animations */
 @keyframes float-hero {
   0% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(1deg); }
@@ -599,7 +571,6 @@ body::after {
   100% { transform: scale(1); box-shadow: 0 4px 10px rgba(255, 0, 79, 0.4); }
 }
 
-/* Ultra-Modern Spinner */
 #loader {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
   background: var(--bg-deep); z-index: 9999;
@@ -620,7 +591,6 @@ body::after {
   100% { transform: rotate(360deg) scale(0.8); opacity: 0.5; }
 }
 
-/* Toast Overhaul */
 .toast-container {
   position: fixed;
   bottom: 40px;
@@ -649,7 +619,6 @@ body::after {
   to { transform: translateX(120%) scale(0.9); opacity: 0; }
 }
 
-/* Order Setup */
 .success-checkmark {
   width: 100px; height: 100px;
   margin: 0 auto 30px;
@@ -667,7 +636,6 @@ body::after {
   100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-/* Mobile Nav - iOS 17 Vibe */
 .mobile-nav {
   display: none;
   background: rgba(10, 10, 12, 0.7);
