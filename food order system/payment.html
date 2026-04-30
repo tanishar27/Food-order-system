@@ -723,11 +723,17 @@
         if (user.id) userId = user.id;
       }
 
+      const totalText = document.getElementById('recap-total').textContent.replace('₹', '');
+      const totalAmount = parseFloat(totalText) || 0;
+      let method = 'Card';
+      if (activeTab === 'upi') method = 'UPI';
+      else if (activeTab === 'cod') method = 'COD';
+
       try {
         const response = await fetch(`${API_BASE}/api/orders`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, cart })
+          body: JSON.stringify({ userId, cart, method, totalAmount })
         });
         const data = await response.json();
         if (response.ok) {

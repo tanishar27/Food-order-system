@@ -1,4 +1,5 @@
-const API_BASE = window.location.port === '5000' ? '' : `http://${window.location.hostname}:5000`;
+const hostname = window.location.hostname || 'localhost';
+const API_BASE = window.location.port === '5000' ? '' : `http://${hostname}:5000`;
 
 const isLoggedIn = localStorage.getItem('isFoodAppLoggedIn') === 'true';
 const isLoginPage = window.location.pathname.includes('login.html');
@@ -153,7 +154,14 @@ function getImageUrl(name, category) {
     'Paneer Butter Masala': 'assets/Paneerbutter.jpg',
     'Ghewar (Sweet)': 'assets/ghewar.jpg',
     'Dal Baati Churma': 'assets/dal baati.jpg',
-    'Masala Dosa': 'assets/masala dosa.jpg'
+    'Masala Dosa': 'assets/masala dosa.jpg',
+    'Indian Veg Thali': 'assets/indian thali.jpg',
+    'Cold Coffee': 'assets/cofe.png',
+    'Strawberry Lassi': 'assets/Strawberry Shake.jpg',
+    'Samosa Chaat': 'assets/images.jpg',
+    'Chole Bhature': 'assets/chole-bhature-8230b.webp',
+    'Idli Sambar': 'assets/idli.png',
+    'Pani Puri': 'assets/panipuri.png'
   };
   if (images[name]) return images[name];
   
@@ -194,7 +202,7 @@ function renderMenuItems(items) {
         <div class="food-card-content">
           <div class="food-card-header">
             <span class="food-card-title">${item.name}</span>
-            <span class="food-rating">★ ${item.rating}</span>
+            <span class="food-rating">★ ${item.rating || '4.5'}</span>
           </div>
           <p class="food-desc">${item.description || ''}</p>
           <div class="food-card-footer">

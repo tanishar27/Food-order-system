@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
   created_at DATETIME     DEFAULT CURRENT_TIMESTAMP
 );
 
+
 CREATE TABLE IF NOT EXISTS menu_items (
   id          INT           AUTO_INCREMENT PRIMARY KEY,
   name        VARCHAR(100)  NOT NULL,
@@ -57,40 +58,42 @@ INSERT IGNORE INTO users (name, email, password, phone, city) VALUES
   ('Admin',        'admin@gmail.com',     'admin123',   '9000000000', 'Mumbai');
 
 INSERT IGNORE INTO menu_items (name, category, price, rating, is_veg, description) VALUES
-  ('Classic Pepperoni Deluxe',   'Pizza',    499.00, 4.9, 0, 'Loaded with spicy pepperoni and mozzarella'),
-  ('Cheesy Double Smash Burger', 'Burgers',  349.00, 4.8, 0, 'Double beef patties with cheese overload'),
-  ('Midnight Lava Cake',         'Desserts', 249.00, 5.0, 1, 'Warm molten chocolate cake'),
-  ('Cold Coffee Delight',        'Drinks',   120.00, 4.0, 1, 'Chilled coffee with whipped cream'),
-  ('Paneer Butter Masala',       'Indian',   220.00, 4.9, 1, 'Creamy paneer curry with butter naan'),
-  ('Dal Baati Churma',           'Indian',   180.00, 4.7, 1, 'Traditional Rajasthani dish'),
-  ('Margherita Pizza',           'Pizza',    399.00, 4.6, 1, 'Classic tomato and basil pizza'),
-  ('Chicken Biryani',            'Indian',   280.00, 4.8, 0, 'Aromatic basmati rice with tender chicken'),
-  ('Veg Spring Rolls',           'Snacks',   149.00, 4.3, 1, 'Crispy rolls stuffed with mixed veggies'),
-  ('Mango Lassi',                'Drinks',    90.00, 4.5, 1, 'Thick chilled mango yogurt drink');
+  ('Paneer Butter Masala', 'North Indian', 150.00, 4.9, 1, 'Soft paneer cubes in rich creamy tomato gravy'),
+  ('Dal Baati Churma', 'North Indian', 120.00, 4.7, 1, 'Authentic Rajasthani platter with crispy baati'),
+  ('Masala Dosa', 'South Indian', 90.00, 4.8, 1, 'Crispy crepe stuffed with spiced potato filling'),
+  ('Indian Veg Thali', 'North Indian', 180.00, 4.6, 1, 'Complete meal with roti, rice, dal, and veggies'),
+  ('Ghewar (Sweet)', 'Sweets', 110.00, 4.5, 1, 'Traditional Rajasthani disc-shaped sweet dish'),
+  ('Cold Coffee', 'Drinks', 60.00, 4.3, 1, 'Chilled brew with milk and cream'),
+  ('Strawberry Lassi', 'Drinks', 70.00, 4.4, 1, 'Sweet yogurt drink blended with fresh strawberries'),
+  ('Samosa Chaat', 'Snacks', 50.00, 4.6, 1, 'Crushed samosas topped with yogurt and chutneys'),
+  ('Chole Bhature', 'North Indian', 110.00, 4.8, 1, 'Spicy chickpea curry with fried fluffy bread'),
+  ('Idli Sambar', 'South Indian', 60.00, 4.5, 1, 'Soft steamed rice cakes served with hot lentil soup'),
+  ('Pani Puri', 'Snacks', 40.00, 4.7, 1, 'Crispy hollow puris filled with spicy tangy water and potato mixture'),
+  ('Midnight Lava Cake', 'Sweets', 249.00, 5.0, 1, 'Decadent warm chocolate cake with molten center and vanilla scoop.');
 
 INSERT IGNORE INTO orders (user_id, food_name, quantity, total_amount, status) VALUES
-  (1,  'Classic Pepperoni Deluxe',   2, 998.00,  'Delivered'),
-  (2,  'Chicken Biryani',            1, 280.00,  'Delivered'),
-  (3,  'Margherita Pizza',           1, 399.00,  'Out for Delivery'),
-  (4,  'Paneer Butter Masala',       3, 660.00,  'Preparing'),
-  (5,  'Cheesy Double Smash Burger', 2, 698.00,  'Delivered'),
-  (6,  'Midnight Lava Cake',         4, 996.00,  'Pending'),
-  (7,  'Dal Baati Churma',           2, 360.00,  'Delivered'),
-  (8,  'Cold Coffee Delight',        3, 360.00,  'Preparing'),
-  (9,  'Veg Spring Rolls',           5, 745.00,  'Out for Delivery'),
-  (10, 'Mango Lassi',               2, 180.00,  'Delivered');
+  (1,  'Paneer Butter Masala', 2, 300.00,  'Delivered'),
+  (2,  'Dal Baati Churma',     1, 120.00,  'Delivered'),
+  (3,  'Masala Dosa',          1, 90.00,   'Out for Delivery'),
+  (4,  'Indian Veg Thali',     3, 540.00,  'Preparing'),
+  (5,  'Ghewar (Sweet)',       2, 220.00,  'Delivered'),
+  (6,  'Cold Coffee',          4, 240.00,  'Pending'),
+  (7,  'Strawberry Lassi',     2, 140.00,  'Delivered'),
+  (8,  'Samosa Chaat',         3, 150.00,  'Preparing'),
+  (9,  'Chole Bhature',        5, 550.00,  'Out for Delivery'),
+  (10, 'Idli Sambar',          2, 120.00,  'Delivered');
 
 INSERT IGNORE INTO payments (order_id, user_id, amount, method, status, transaction_id) VALUES
-  (1,  1,  998.00, 'Card', 'Success', 'TXN20241001'),
-  (2,  2,  280.00, 'UPI',  'Success', 'TXN20241002'),
-  (3,  3,  399.00, 'COD',  'Pending', 'TXN20241003'),
-  (4,  4,  660.00, 'UPI',  'Success', 'TXN20241004'),
-  (5,  5,  698.00, 'Card', 'Success', 'TXN20241005'),
-  (6,  6,  996.00, 'COD',  'Pending', 'TXN20241006'),
-  (7,  7,  360.00, 'UPI',  'Success', 'TXN20241007'),
-  (8,  8,  360.00, 'UPI',  'Failed',  'TXN20241008'),
-  (9,  9,  745.00, 'Card', 'Success', 'TXN20241009'),
-  (10, 10, 180.00, 'COD',  'Success', 'TXN20241010');
+  (1,  1,  300.00, 'Card', 'Success', 'TXN20241001'),
+  (2,  2,  120.00, 'UPI',  'Success', 'TXN20241002'),
+  (3,  3,  90.00,  'COD',  'Pending', 'TXN20241003'),
+  (4,  4,  540.00, 'UPI',  'Success', 'TXN20241004'),
+  (5,  5,  220.00, 'Card', 'Success', 'TXN20241005'),
+  (6,  6,  240.00, 'COD',  'Pending', 'TXN20241006'),
+  (7,  7,  140.00, 'UPI',  'Success', 'TXN20241007'),
+  (8,  8,  150.00, 'UPI',  'Failed',  'TXN20241008'),
+  (9,  9,  550.00, 'Card', 'Success', 'TXN20241009'),
+  (10, 10, 120.00, 'COD',  'Success', 'TXN20241010');
 
 SELECT * FROM users;
 SELECT * FROM orders;
